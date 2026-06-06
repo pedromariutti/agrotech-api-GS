@@ -41,9 +41,14 @@ Acesse a documentação interativa (Swagger) ao vivo pelo link:
 
 *Nota: Por se tratar de um servidor gratuito, a primeira requisição pode levar cerca de 50 segundos para "acordar" a máquina virtual. As requisições subsequentes ocorrerão em tempo real.*
 
-Server live
+#### Server live
 
 <img width="675" height="905" alt="DeployLive" src="https://github.com/user-attachments/assets/c55309b4-8371-42ed-97fd-db2f9e0e922f" />
+
+#### Swagger live
+
+<img width="1534" height="977" alt="image" src="https://github.com/user-attachments/assets/2e8a093c-5958-4740-884b-aa90255e504e" />
+
 
 
 ## Configuração do Spring Initializr
