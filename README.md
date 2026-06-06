@@ -36,7 +36,7 @@ A aplicação segue os princípios REST e utiliza boas práticas de desenvolvime
 
 A API foi devidamente containerizada e hospedada na nuvem através do **Render**. 
 
-Acesse a documentação interativa (Swagger) ao vivo pelo link abaixo:
+Acesse a documentação interativa (Swagger) ao vivo pelo link:
 👉 **[ACESSAR O SWAGGER DA API NA NUVEM](https://agrotech-api-gs-java.onrender.com/swagger-ui/index.html)**
 
 *Nota: Por se tratar de um servidor gratuito, a primeira requisição pode levar cerca de 50 segundos para "acordar" a máquina virtual. As requisições subsequentes ocorrerão em tempo real.*
