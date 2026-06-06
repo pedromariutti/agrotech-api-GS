@@ -42,6 +42,7 @@ Acesse a documentação interativa (Swagger) ao vivo pelo link abaixo:
 *Nota: Por se tratar de um servidor gratuito, a primeira requisição pode levar cerca de 50 segundos para "acordar" a máquina virtual. As requisições subsequentes ocorrerão em tempo real.*
 
 Server live
+
 <img width="675" height="905" alt="DeployLive" src="https://github.com/user-attachments/assets/c55309b4-8371-42ed-97fd-db2f9e0e922f" />
 
 
