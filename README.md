@@ -30,8 +30,6 @@ Esta API foi desenvolvida como parte do Challenge para fornecer uma solução te
 
 - **Histórico Preditivo:** Armazenamento seguro de todas as telemetrias e dados orbitais no banco de dados Oracle para suporte à emissão futura de alertas climáticos e planejamento de safras.
 
-A aplicação segue os princípios REST e utiliza boas práticas de desenvolvimento como DTOs (Data Transfer Objects) para validação de dados com Bean Validation, inversão de controle e isolamento completo das camadas.
-
 ##  Deploy
 
 A API foi devidamente containerizada e hospedada na nuvem através do **Render**. 
@@ -259,19 +257,29 @@ classDiagram
         +main(args: String[]) void
     }
 
+    class CorsConfig {
+        <<Configuration>>
+        +addCorsMappings(registry: CorsRegistry) void
+    }
+
     class AgroController {
+        <<RestController>>
         -inteligenciaService: AgroInteligenciaService
-        -sateliteRepository: PrevisaoSateliteRepository
+        +checkHealth() ResponseEntity~String~
         +criarLeituraSolo(dto: RegistroSoloDto) ResponseEntity~String~
         +obterTodasLeiturasSolo() ResponseEntity~List~RegistroSolo~~
         +obterLeituraSoloPorId(id: Long) ResponseEntity~RegistroSolo~
         +modificarLeituraSolo(id: Long, dto: RegistroSoloDto) ResponseEntity~RegistroSolo~
         +removerLeituraSolo(id: Long) ResponseEntity~Void~
-        +criarPrevisao(dto: PrevisaoSateliteDto) ResponseEntity~PrevisaoSatelite~
+        +atualizarDadosSatelite(dto: PrevisaoSateliteDto) ResponseEntity~PrevisaoSatelite~
         +obterTodasPrevisoes() ResponseEntity~List~PrevisaoSatelite~~
+        +obterPrevisaoPorId(id: Long) ResponseEntity~PrevisaoSatelite~
+        +modificarPrevisao(id: Long, dto: PrevisaoSateliteDto) ResponseEntity~PrevisaoSatelite~
+        +removerPrevisao(id: Long) ResponseEntity~Void~
     }
 
     class AgroInteligenciaService {
+        <<Service>>
         -soloRepository: RegistroSoloRepository
         -sateliteRepository: PrevisaoSateliteRepository
         +salvarRegistroSolo(dto: RegistroSoloDto) String
@@ -281,6 +289,9 @@ classDiagram
         +deletarRegistroSolo(id: Long) boolean
         +salvarPrevisao(dto: PrevisaoSateliteDto) PrevisaoSatelite
         +listarTodasPrevisoes() List~PrevisaoSatelite~
+        +buscarPrevisaoPorId(id: Long) Optional~PrevisaoSatelite~
+        +atualizarPrevisao(id: Long, dto: PrevisaoSateliteDto) Optional~PrevisaoSatelite~
+        +deletarPrevisao(id: Long) boolean
     }
 
     class RegistroSoloRepository {
@@ -302,6 +313,7 @@ classDiagram
     }
 
     class RegistroSolo {
+        <<Entity>>
         -id: Long
         -umidade: Double
         -temperatura: Double
@@ -310,6 +322,7 @@ classDiagram
     }
 
     class PrevisaoSatelite {
+        <<Entity>>
         -id: Long
         -regiao: String
         -chuvaIminente: Boolean
@@ -317,19 +330,20 @@ classDiagram
     }
 
     class RegistroSoloDto {
-        -umidade: Double
-        -temperatura: Double
-        -dispositivoId: String
+        <<Record>>
+        +umidade: Double
+        +temperatura: Double
+        +dispositivoId: String
     }
 
     class PrevisaoSateliteDto {
-        -regiao: String
-        -chuvaIminente: Boolean
+        <<Record>>
+        +regiao: String
+        +chuvaIminente: Boolean
     }
 
     %% Relacionamentos e Dependências
     AgroController --> AgroInteligenciaService : usa
-    AgroController --> PrevisaoSateliteRepository : usa
     AgroInteligenciaService --> RegistroSoloRepository : usa
     AgroInteligenciaService --> PrevisaoSateliteRepository : usa
     RegistroSoloRepository --|> JpaRepository : extends
