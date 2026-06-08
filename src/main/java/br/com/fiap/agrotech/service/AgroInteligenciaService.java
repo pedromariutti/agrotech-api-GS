@@ -21,44 +21,45 @@ public class AgroInteligenciaService {
     private final RegistroSoloRepository soloRepository;
     private final PrevisaoSateliteRepository sateliteRepository;
 
+    // CREATE (Solo)
     public String salvarRegistroSolo(RegistroSoloDto dto) {
         RegistroSolo registro = new RegistroSolo(
                 null,
-                dto.getUmidade(),
-                dto.getTemperatura(),
+                dto.umidade(),
+                dto.temperatura(),
                 LocalDateTime.now(),
-                dto.getDispositivoId()
+                dto.dispositivoId()
         );
         soloRepository.save(registro);
 
         Optional<PrevisaoSatelite> previsaoOpt = sateliteRepository.findFirstByRegiaoOrderByDataPrevisaoDesc("Setor_A_Principal");
-        if (previsaoOpt.isPresent() && dto.getUmidade() < 40.0 && previsaoOpt.get().getChuvaIminente()) {
-            return "REGA BLOQUEADA AUTOMATICAMENTE. Chuva iminente detectada por satélite.";
+        if (previsaoOpt.isPresent() && previsaoOpt.get().getChuvaIminente() && dto.umidade() < 40.0) {
+            return "REGA BLOQUEADA AUTOMATICAMENTE. Chuva iminente detectada por satelite.";
         }
-        return dto.getUmidade() < 40.0 ? "SISTEMA DE IRRIGAÇÃO ATIVADO." : "SISTEMA EM ESPERA.";
+        return "Leitura registrada. Condicoes normais para o cultivo.";
     }
 
-    // READ (Todos)
+    // READ ALL (Solo)
     public List<RegistroSolo> listarTodosRegistrosSolo() {
         return soloRepository.findAll();
     }
 
-    // READ (Por ID)
+    // READ BY ID (Solo)
     public Optional<RegistroSolo> buscarRegistroSoloPorId(Long id) {
         return soloRepository.findById(id);
     }
 
-    // UPDATE
+    // UPDATE (Solo)
     public Optional<RegistroSolo> atualizarRegistroSolo(Long id, RegistroSoloDto dto) {
         return soloRepository.findById(id).map(registroExistente -> {
-            registroExistente.setUmidade(dto.getUmidade());
-            registroExistente.setTemperatura(dto.getTemperatura());
-            registroExistente.setDispositivoId(dto.getDispositivoId());
+            registroExistente.setUmidade(dto.umidade());
+            registroExistente.setTemperatura(dto.temperatura());
+            registroExistente.setDispositivoId(dto.dispositivoId());
             return soloRepository.save(registroExistente);
         });
     }
 
-    // DELETE
+    // DELETE (Solo)
     public boolean deletarRegistroSolo(Long id) {
         if (soloRepository.existsById(id)) {
             soloRepository.deleteById(id);
@@ -67,38 +68,37 @@ public class AgroInteligenciaService {
         return false;
     }
 
-
-    // CREATE
+    // CREATE (Satelite)
     public PrevisaoSatelite salvarPrevisao(PrevisaoSateliteDto dto) {
         PrevisaoSatelite novaPrevisao = new PrevisaoSatelite(
                 null,
-                dto.getRegiao(),
-                dto.getChuvaIminente(),
+                dto.regiao(),
+                dto.chuvaIminente(),
                 LocalDate.now()
         );
         return sateliteRepository.save(novaPrevisao);
     }
 
-    // READ (Todos)
+    // READ ALL (Satelite)
     public List<PrevisaoSatelite> listarTodasPrevisoes() {
         return sateliteRepository.findAll();
     }
 
-    // READ (Por ID)
+    // READ BY ID (Satelite)
     public Optional<PrevisaoSatelite> buscarPrevisaoPorId(Long id) {
         return sateliteRepository.findById(id);
     }
 
-    // UPDATE
+    // UPDATE (Satelite)
     public Optional<PrevisaoSatelite> atualizarPrevisao(Long id, PrevisaoSateliteDto dto) {
         return sateliteRepository.findById(id).map(previsaoExistente -> {
-            previsaoExistente.setRegiao(dto.getRegiao());
-            previsaoExistente.setChuvaIminente(dto.getChuvaIminente());
+            previsaoExistente.setRegiao(dto.regiao());
+            previsaoExistente.setChuvaIminente(dto.chuvaIminente());
             return sateliteRepository.save(previsaoExistente);
         });
     }
 
-    // DELETE
+    // DELETE (Satelite)
     public boolean deletarPrevisao(Long id) {
         if (sateliteRepository.existsById(id)) {
             sateliteRepository.deleteById(id);

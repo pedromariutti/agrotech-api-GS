@@ -18,11 +18,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/agro")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @Tag(name = "Agricultura de Precisão", description = "CRUD completo para telemetria de solo e dados orbitais")
 public class AgroController {
 
     private final AgroInteligenciaService inteligenciaService;
-
 
     @PostMapping("/solo")
     @Operation(summary = "C - Cadastrar leitura de solo", description = "Recebe dados do ESP32 e avalia regras de irrigação")
@@ -32,13 +32,13 @@ public class AgroController {
     }
 
     @GetMapping("/solo")
-    @Operation(summary = "R - Listar todas as leituras", description = "Retorna o histórico completo do banco Oracle")
+    @Operation(summary = "R - Listar todas as leituras de solo")
     public ResponseEntity<List<RegistroSolo>> obterTodasLeiturasSolo() {
         return ResponseEntity.ok(inteligenciaService.listarTodosRegistrosSolo());
     }
 
     @GetMapping("/solo/{id}")
-    @Operation(summary = "R - Buscar leitura por ID")
+    @Operation(summary = "R - Buscar leitura de solo por ID")
     public ResponseEntity<RegistroSolo> obterLeituraSoloPorId(@PathVariable Long id) {
         return inteligenciaService.buscarRegistroSoloPorId(id)
                 .map(ResponseEntity::ok)
@@ -46,7 +46,7 @@ public class AgroController {
     }
 
     @PutMapping("/solo/{id}")
-    @Operation(summary = "U - Atualizar leitura por ID")
+    @Operation(summary = "U - Atualizar leitura de solo por ID")
     public ResponseEntity<RegistroSolo> modificarLeituraSolo(@PathVariable Long id, @Valid @RequestBody RegistroSoloDto dto) {
         return inteligenciaService.atualizarRegistroSolo(id, dto)
                 .map(ResponseEntity::ok)
@@ -54,7 +54,7 @@ public class AgroController {
     }
 
     @DeleteMapping("/solo/{id}")
-    @Operation(summary = "D - Deletar leitura por ID")
+    @Operation(summary = "D - Deletar leitura de solo por ID")
     public ResponseEntity<Void> removerLeituraSolo(@PathVariable Long id) {
         if (inteligenciaService.deletarRegistroSolo(id)) {
             return ResponseEntity.noContent().build();
@@ -62,10 +62,9 @@ public class AgroController {
         return ResponseEntity.notFound().build();
     }
 
-
     @PostMapping("/satelite")
-    @Operation(summary = "C - Cadastrar previsão de satélite", description = "Alimenta a API com dados climáticos da NASA/ESA")
-    public ResponseEntity<PrevisaoSatelite> criarPrevisao(@Valid @RequestBody PrevisaoSateliteDto dto) {
+    @Operation(summary = "C - Cadastrar previsão orbital de satélite")
+    public ResponseEntity<PrevisaoSatelite> atualizarDadosSatelite(@Valid @RequestBody PrevisaoSateliteDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(inteligenciaService.salvarPrevisao(dto));
     }
 
