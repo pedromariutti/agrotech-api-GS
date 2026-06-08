@@ -5,6 +5,7 @@ API RESTful desenvolvida em Java com Spring Boot para o ecossistema de agricultu
 ## Índice
 
 - [Sobre o Projeto](#sobre-o-projeto)
+- [Deploy](#deploy)
 - [Configuração do Spring Initializr](#configuração-do-spring-initializr)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Pré-requisitos](#pré-requisitos)
@@ -30,6 +31,25 @@ Esta API foi desenvolvida como parte do Challenge para fornecer uma solução te
 - **Histórico Preditivo:** Armazenamento seguro de todas as telemetrias e dados orbitais no banco de dados Oracle para suporte à emissão futura de alertas climáticos e planejamento de safras.
 
 A aplicação segue os princípios REST e utiliza boas práticas de desenvolvimento como DTOs (Data Transfer Objects) para validação de dados com Bean Validation, inversão de controle e isolamento completo das camadas.
+
+##  Deploy
+
+A API foi devidamente containerizada e hospedada na nuvem através do **Render**. 
+
+Acesse a documentação interativa (Swagger) ao vivo pelo link:
+👉 **[ACESSAR O SWAGGER DA API NA NUVEM](https://agrotech-api-gs-java.onrender.com/swagger-ui/index.html)**
+
+*Nota: Por se tratar de um servidor gratuito, a primeira requisição pode levar cerca de 50 segundos para "acordar" a máquina virtual. As requisições subsequentes ocorrerão em tempo real.*
+
+#### Server live
+
+<img width="675" height="905" alt="DeployLive" src="https://github.com/user-attachments/assets/c55309b4-8371-42ed-97fd-db2f9e0e922f" />
+
+#### Swagger live
+
+<img width="1534" height="977" alt="image" src="https://github.com/user-attachments/assets/2e8a093c-5958-4740-884b-aa90255e504e" />
+
+
 
 ## Configuração do Spring Initializr
 
