@@ -17,6 +17,7 @@ API RESTful desenvolvida em Java com Spring Boot para o ecossistema de agricultu
 - [Testes](#testes)
 - [Documentação da API (Swagger)](#documentação-da-api-swagger)
 - [Modelo UML](#modelo-uml)
+- [Link do Pitch](#link-do-pitch)
 
 ## Sobre o Projeto
 
@@ -353,6 +354,10 @@ classDiagram
     RegistroSoloRepository ..> RegistroSolo : gerencia
     PrevisaoSateliteRepository ..> PrevisaoSatelite : gerencia
 
+```
+## Link do Pitch 
+
+https://www.youtube.com/watch?v=blCfsJlqPRc
 
 
 
